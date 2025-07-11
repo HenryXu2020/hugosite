@@ -1,27 +1,136 @@
 <nav data-nav class="flex justify-between items-center center bg-white divider-grey relative">
 
-	<!-- Logo -->
-	<a href="/" class="pa3 db mr4 h-100 w3 flex-none">
-		<img src="/img/logo.svg" alt="Kaldi logo" class="br0 db mb0 w-100"/>
-	</a>
+  <!-- Logo -->
+  <a href="/" class="pa3 db mr4 h-100 w3 flex-none">
+    <img src="/img/logo.svg" alt="Kaldi logo" class="br0 db mb0 w-100"/>
+  </a>
 
-	<!-- Primary Nav -->
-	<div data-mobile-menu class="mobile-menu-container">
-		<svg viewBox="0 0 100 80" width="40" height="25" class="mobile-menu-icon">
-			<rect class="menu-icon-top mobile-menu-inner" width="100" height="8"></rect>
-			<rect class="menu-icon-middle mobile-menu-inner" y="30" width="100" height="8"></rect>
-			<rect class="menu-icon-bottom mobile-menu-inner" y="60" width="100" height="8"></rect>
-		</svg>
-	</div>
+  <!-- Primary Nav -->
+  <div data-mobile-menu class="mobile-menu-container">
+    <svg viewBox="0 0 100 80" width="40" height="25" class="mobile-menu-icon">
+      <rect class="menu-icon-top mobile-menu-inner" width="100" height="8"></rect>
+      <rect class="menu-icon-middle mobile-menu-inner" y="30" width="100" height="8"></rect>
+      <rect class="menu-icon-bottom mobile-menu-inner" y="60" width="100" height="8"></rect>
+    </svg>
+  </div>
 
-	<ul class="flex b grey-3 nav-menu">
-		<li><a href="/products" class="pa3 no-underline db">Products</a></li>
+  <ul class="flex b grey-3 nav-menu">
+    <!-- Products dropdown -->
+    <li class="nav-dropdown">
+      <a href="/products" class="pa3 no-underline db flex items-center" aria-haspopup="true">
+        Products
+        <svg class="dropdown-icon ml1" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path d="M6 9l6 6 6-6"/>
+        </svg>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="/products/coffee" class="pa3 no-underline db">Coffee</a></li>
+        <li><a href="/products/equipment" class="pa3 no-underline db">Brewing Equipment</a></li>
+        <li><a href="/products/accessories" class="pa3 no-underline db">Accessories</a></li>
+      </ul>
+    </li>
 
-		<li><a href="/values" class="pa3 no-underline db">Values</a></li>
-
-		<li><a href="/post" class="pa3 no-underline db">Blog</a></li>
-
-		<li><a href="/contact" class="pa3 no-underline db">Contact</a></li>
-	</ul>
+    <li><a href="/values" class="pa3 no-underline db">Values</a></li>
+    <li><a href="/post" class="pa3 no-underline db">Blog</a></li>
+    <li><a href="/contact" class="pa3 no-underline db">Contact</a></li>
+  </ul>
 
 </nav>
+
+<style>
+  /* Dropdown styles */
+  .nav-dropdown {
+    position: relative;
+  }
+  
+  .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 200px;
+    background: white;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    z-index: 100;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+  }
+  
+  .nav-dropdown:hover .dropdown-menu,
+  .nav-dropdown:focus-within .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  
+  .dropdown-icon {
+    transition: transform 0.3s ease;
+  }
+  
+  .nav-dropdown:hover .dropdown-icon,
+  .nav-dropdown:focus-within .dropdown-icon {
+    transform: rotate(180deg);
+  }
+  
+  /* Mobile styles */
+  @media (max-width: 768px) {
+    .nav-menu {
+      flex-direction: column;
+      width: 100%;
+    }
+    
+    .nav-dropdown {
+      width: 100%;
+    }
+    
+    .dropdown-menu {
+      position: static;
+      width: 100%;
+      box-shadow: none;
+      opacity: 1;
+      max-height: 0;
+      overflow: hidden;
+      transform: none;
+      transition: max-height 0.3s ease;
+      visibility: visible;
+    }
+    
+    .dropdown-menu.active {
+      max-height: 500px;
+    }
+    
+    .dropdown-icon {
+      transform: rotate(0deg);
+    }
+    
+    .dropdown-menu.active ~ a .dropdown-icon {
+      transform: rotate(180deg);
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Mobile menu toggle
+    const mobileMenuBtn = document.querySelector('[data-mobile-menu]');
+    const navMenu = document.querySelector('.nav-menu');
+    
+    mobileMenuBtn.addEventListener('click', function() {
+      navMenu.classList.toggle('active');
+    });
+    
+    // Mobile dropdown toggle
+    if (window.innerWidth <= 768) {
+      const dropdownToggles = document.querySelectorAll('.nav-dropdown > a');
+      
+      dropdownToggles.forEach(toggle => {
+        toggle.addEventListener('click', function(e) {
+          e.preventDefault();
+          const dropdown = this.nextElementSibling;
+          dropdown.classList.toggle('active');
+        });
+      });
+    }
+  });
+</script>
