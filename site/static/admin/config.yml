@@ -2,19 +2,15 @@ backend:
   name: git-gateway
   branch: main
 
-# 全局媒体设置
-media_folder: "site/static/img"   # 所有上传的图片都存储在这里
-public_folder: "/img"             # Hugo 公开访问的路径
+media_folder: "site/static/img" # Folder where user uploaded files should go
+public_folder: "img"
 
-collections:
-  - name: "post"
-    label: "Post"
-    folder: "site/content/post"
-    path: "{{slug}}/index"
-    create: true
-    # 添加媒体库配置，强制从全局目录加载
-    media_folder: "site/static/img"  # 覆盖集合级别的媒体目录
-    public_folder: "/img"            # 覆盖集合级别的公开路径
+collections: # A list of collections the CMS should be able to edit
+  - name: "post" # Used in routes, ie.: /admin/collections/:slug/edit
+    label: "Post" # Used in the UI, ie.: "New Post"
+    folder: "site/content/post" # The path to the folder where the documents are stored
+    path: "{{slug}}/index" # Each document is inside a folder with the slug name.
+    create: true # Allow users to create new documents in this collection
     fields: # The fields each document in this collection have
       - {label: "Title", name: "title", widget: "string"}
       - {label: "Publish Date", name: "date", widget: "datetime"}
