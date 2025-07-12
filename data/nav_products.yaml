@@ -1,0 +1,5 @@
+title: Products
+items:
+  - label: Coffee
+    description: Premium coffee beans
+    url: /products/coffee
