@@ -6,6 +6,22 @@ media_folder: "site/static/img" # Folder where user uploaded files should go
 public_folder: "img"
 
 collections: # A list of collections the CMS should be able to edit
+  - name: "nav"
+    label: "Navigation"
+    files:
+      - name: "products_menu"
+        label: "Products Dropdown"
+        file: "data/nav_products.yaml"
+        fields:
+          - { name: "title", label: "Menu Title", widget: "string", default: "Products" }
+          - name: "items"
+            label: "Menu Items"
+            widget: "list"
+            fields:
+              - { name: "label", label: "Item Label", widget: "string" }
+              - { name: "url", label: "URL Path", widget: "string", pattern: ["^/[a-zA-Z0-9/-]+$", "Must start with /"] }
+              - { name: "description", label: "Short Description", widget: "text", required: false }
+
   - name: "post" # Used in routes, ie.: /admin/collections/:slug/edit
     label: "Post" # Used in the UI, ie.: "New Post"
     folder: "site/content/post" # The path to the folder where the documents are stored
